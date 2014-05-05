@@ -21,3 +21,4 @@ sound.data
 #Eclipse files
 .classpath
 .project
+bin
