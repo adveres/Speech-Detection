@@ -17,3 +17,7 @@ speech.raw
 energy.data
 zero.data
 sound.data
+
+#Eclipse files
+.classpath
+.project
