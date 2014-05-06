@@ -24,16 +24,11 @@ public class Example {
         }
 
         byte[] rawSoundBytes = FileSaver.fileToBytes(fileName);
-
-        byte[] first_800_bytes = new byte[Utils.CHUNK_OF_100_MS];
-        for (int x = 0; x < Utils.CHUNK_OF_100_MS; x++) {
-            first_800_bytes[x] = rawSoundBytes[x];
-        }
-
-        Data d = Algorithms.processFirst100ms(first_800_bytes);
-        System.out.println(d);
+        Data d = Utils.analyzeFirst100ms(rawSoundBytes);
 
         byte[] speechOnly = Algorithms.removeSilence(rawSoundBytes, d);
+
+        System.out.println(d);
         System.out.println("Raw sound len: " + rawSoundBytes.length);
         System.out.println("Speech len: " + speechOnly.length);
 

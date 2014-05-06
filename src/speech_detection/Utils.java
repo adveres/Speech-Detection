@@ -204,4 +204,19 @@ public class Utils {
         return ret;
     }
 
+    /**
+     * Runs the first 100ms algorithm on the first 800 bytes of raw sound
+     * 
+     * @param rawSoundBytes
+     * @return
+     */
+    public static Data analyzeFirst100ms(byte[] rawSoundBytes) {
+        byte[] first_800_bytes = new byte[Utils.CHUNK_OF_100_MS];
+        for (int x = 0; x < Utils.CHUNK_OF_100_MS; x++) {
+            first_800_bytes[x] = rawSoundBytes[x];
+        }
+
+        return Algorithms.processFirst100ms(first_800_bytes);
+    }
+
 }

@@ -91,8 +91,8 @@ public class Algorithms {
             endpointPairs.add(new Pair(n1, n2));
         }
 
-        System.out.println("silenceRemoved " + endpointPairs);
-        System.out.println("silenceRemoved.size " + endpointPairs.size());
+        //System.out.println("silenceRemoved " + endpointPairs);
+        //System.out.println("silenceRemoved.size " + endpointPairs.size());
         return removeSilentBytes(rawSound, endpointPairs, thresholds);
     }
 
@@ -126,7 +126,7 @@ public class Algorithms {
                         m = i + 1;
                         inner = false;
                         if (m >= (energyArray.length)) {
-                            System.out.println("m has reached the end of the array");
+                            //System.out.println("m has reached the end of the array");
                             n1 = energyArray.length - 1;
                             return n1;
                         }
@@ -145,7 +145,7 @@ public class Algorithms {
                         } else {
                             i++;
                             if (i >= (energyArray.length)) {
-                                System.out.println("i has reached the end of the array");
+                                //System.out.println("i has reached the end of the array");
                                 n1 = energyArray.length - 1;
                                 return n1;
                             }
@@ -155,7 +155,7 @@ public class Algorithms {
             } else {
                 m++;
                 if (m >= (energyArray.length)) {
-                    System.out.println("m has reached the end of the array");
+                    //System.out.println("m has reached the end of the array");
                     n1 = energyArray.length - 1;
                     return n1;
                 }
