@@ -8,8 +8,8 @@ import javax.management.MBeanServerConnection;
 import com.sun.management.OperatingSystemMXBean;
 
 /**
- * This program reads in the sound.raw file and benchmarks how long it takes to
- * run the algorithm on it over 10,000 tries.
+ * This program reads in the sound.raw file and runs certain benchmarks on its
+ * system footprint while it runs the algorithm to detect speech.
  * 
  * @author adveres
  * 
