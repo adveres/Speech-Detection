@@ -29,7 +29,7 @@ public class Benchmark {
      * Run the algorithm 10K times to make the JVM work, then do another 10K
      * times and take the average.
      */
-    public void measureAverageRunTime() {
+    public byte[] measureAverageRunTime() {
         byte[] speechOnly = null;
         long start = 0;
         int runs = 10000; // enough to run for 2-10 seconds.
@@ -41,6 +41,7 @@ public class Benchmark {
         }
         long time = System.nanoTime() - start;
         System.out.printf("Each silence removal run took an average of %,d ns%n", time / runs);
+        return speechOnly;
     }
 
     /**
@@ -83,8 +84,13 @@ public class Benchmark {
     public static void main(String[] args) {
 
         Benchmark bench = new Benchmark();
-        bench.measureAverageRunTime();
-        bench.measureCPUUsage();
+        byte[] speech = bench.measureAverageRunTime();
+        //bench.measureCPUUsage();
+        System.out.println("Raw sound file is " + bench.rawSoundBytes.length + " bytes.");
+        System.out.println("Speech file is " + speech.length + " bytes.");
+        
+        double reduction = 100 - (100 * ((double)speech.length/(double)bench.rawSoundBytes.length));
+        System.out.printf("Speech file is %.2f%s smaller than the original raw sound.", reduction, "%");
 
     }
 }
