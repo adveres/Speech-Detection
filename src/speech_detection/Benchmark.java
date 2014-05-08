@@ -1,12 +1,5 @@
 package speech_detection;
 
-import java.io.IOException;
-import java.lang.management.ManagementFactory;
-
-import javax.management.MBeanServerConnection;
-
-import com.sun.management.OperatingSystemMXBean;
-
 /**
  * This program reads in the sound.raw file and runs certain benchmarks on its
  * system footprint while it runs the algorithm to detect speech.
@@ -28,52 +21,35 @@ public class Benchmark {
     /**
      * Run the algorithm 10K times to make the JVM work, then do another 10K
      * times and take the average.
+     * 
+     * https://stackoverflow.com/questions/3382954/measure-execution-time-for-a-java-method
      */
-    public byte[] measureAverageRunTime() {
-        byte[] speechOnly = null;
+    public void measureAverageRunTime() {
         long start = 0;
         int runs = 10000; // enough to run for 2-10 seconds.
         for (int i = -10000; i < runs; i++) {
             if (i == 0) {
                 start = System.nanoTime();
             }
-            speechOnly = Algorithms.removeSilence(rawSoundBytes, measurements);
+            byte[] speechOnly = Algorithms.removeSilence(rawSoundBytes, measurements);
         }
         long time = System.nanoTime() - start;
         System.out.printf("Each silence removal run took an average of %,d ns%n", time / runs);
-        return speechOnly;
     }
 
     /**
-     * Measure CPU usage before/after the algorithm to capture the load.
+     * Pull in both sound.raw/speech.raw and compare file sizes.
      */
-    public void measureCPUUsage() {
-        MBeanServerConnection mbsc = ManagementFactory.getPlatformMBeanServer();
-        OperatingSystemMXBean osMBean = null;
-        try {
-            osMBean = ManagementFactory.newPlatformMXBeanProxy(mbsc,
-                    ManagementFactory.OPERATING_SYSTEM_MXBEAN_NAME, OperatingSystemMXBean.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void measureFileSizes() {
+        byte[] rawSoundBytes = FileSaver.fileToBytes(Utils.FILENAME_SOUND_RAW);
+        byte[] rawSpeechBytes = FileSaver.fileToBytes(Utils.FILENAME_SPEECH_RAW);
 
-        long nanoBefore = System.nanoTime();
-        long cpuBefore = osMBean.getProcessCpuTime();
+        System.out.print("Raw sound file is [" + rawSoundBytes.length + " bytes].  ");
+        System.out.println("Speech file is [" + rawSpeechBytes.length + " bytes].");
 
-        // Call an expensive task, or sleep if you are monitoring a remote
-        // process
-        byte[] speechOnly = Algorithms.removeSilence(rawSoundBytes, measurements);
-
-        long cpuAfter = osMBean.getProcessCpuTime();
-        long nanoAfter = System.nanoTime();
-        long percent;
-        System.out.println(nanoBefore + " " + nanoAfter);
-        if (nanoAfter > nanoBefore)
-            percent = ((cpuAfter - cpuBefore) * 100L) / (nanoAfter - nanoBefore);
-        else
-            percent = 0;
-
-        System.out.println("Cpu usage: " + percent + "%");
+        double reduction = 100 - (100 * ((double) rawSpeechBytes.length / (double) rawSoundBytes.length));
+        System.out.printf("Speech file is %.2f%s smaller than the original raw sound.", reduction,
+                "%");
     }
 
     /**
@@ -84,13 +60,7 @@ public class Benchmark {
     public static void main(String[] args) {
 
         Benchmark bench = new Benchmark();
-        byte[] speech = bench.measureAverageRunTime();
-        //bench.measureCPUUsage();
-        System.out.println("Raw sound file is " + bench.rawSoundBytes.length + " bytes.");
-        System.out.println("Speech file is " + speech.length + " bytes.");
-        
-        double reduction = 100 - (100 * ((double)speech.length/(double)bench.rawSoundBytes.length));
-        System.out.printf("Speech file is %.2f%s smaller than the original raw sound.", reduction, "%");
-
+        bench.measureAverageRunTime();
+        bench.measureFileSizes();
     }
 }
