@@ -11,6 +11,7 @@ public class Example {
 
     public static void main(String[] args) {
 
+    	System.out.println(OSUtils.getOsName());
         // String fileName = "adam1.raw";
         String fileName = Utils.FILENAME_SOUND_RAW;
         // String fileName = "rawSilence.raw";
