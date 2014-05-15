@@ -12,11 +12,12 @@
 hs_err_pid*
 
 #Project specific files
-sound.raw
-speech.raw
-energy.data
-zero.data
-sound.data
+sound*.raw
+speech*.raw
+energy*.data
+zero*.data
+sound*.data
+speech*.data
 
 #Eclipse files
 .classpath

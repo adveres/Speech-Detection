@@ -48,7 +48,7 @@ public class Benchmark {
         System.out.println("Speech file is [" + rawSpeechBytes.length + " bytes].");
 
         double reduction = 100 - (100 * ((double) rawSpeechBytes.length / (double) rawSoundBytes.length));
-        System.out.printf("Speech file is %.2f%s smaller than the original raw sound.", reduction,
+        System.out.printf("Speech file is %.2f%s smaller than the original raw sound.\n", reduction,
                 "%");
     }
 
@@ -62,5 +62,6 @@ public class Benchmark {
         Benchmark bench = new Benchmark();
         bench.measureAverageRunTime();
         bench.measureFileSizes();
+        System.out.println("--------------------------");
     }
 }
