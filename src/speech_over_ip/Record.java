@@ -1,4 +1,4 @@
-package speech_detection;
+package speech_over_ip;
 
 import javax.sound.sampled.AudioFormat;
 
@@ -39,12 +39,12 @@ public class Record {
 
         // Attach a stupid shutdown hook to catch ctrl+c in a Java console
         // program.
-        ShutdownThread shutdownHook = new ShutdownThread(recorder);
-        Runtime.getRuntime().addShutdownHook(new Thread(shutdownHook));
+        // ShutdownThread shutdownHook = new ShutdownThread(recorder);
+        //Runtime.getRuntime().addShutdownHook(new Thread(shutdownHook));
 
         // The recorder MUST write to the shutdown hook's ByteArrayOutputStream
         // otherwise there is no guarantee BAOS won't be nulled during shutdown.
-        recorder.start(shutdownHook.baos);
+        recorder.start("192.168.1.11", 7);
 
         try {
             // Wait for thread to stop

@@ -1,4 +1,4 @@
-package speech_detection;
+package speech_over_ip;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
