@@ -1,4 +1,4 @@
-package speech_over_ip;
+package speech_detection;
 
 import java.util.ArrayList;
 import java.util.Arrays;

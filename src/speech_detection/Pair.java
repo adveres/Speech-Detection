@@ -1,4 +1,4 @@
-package speech_over_ip;
+package speech_detection;
 
 /**
  * Simple class to hold a pair of integer points

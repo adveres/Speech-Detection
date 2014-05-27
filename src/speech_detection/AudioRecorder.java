@@ -1,8 +1,7 @@
-package speech_over_ip;
+package speech_detection;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
@@ -22,25 +21,16 @@ class AudioRecorder implements Runnable {
     byte[] first_100_bytes;
 
     boolean running = false;
-
     Data data = null;
-    ByteArrayOutputStream baos = null;
-    Sender sender = null;
 
-    public void start(String host, int port) {
+    ByteArrayOutputStream baos = null;
+
+    public void start(ByteArrayOutputStream baos) {
         thread = new Thread(this);
         thread.start();
         running = true;
 
-        try {
-            sender = new Sender(host, port);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-            System.exit(1);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
+        this.baos = baos;
     }
 
     public void stop() {
@@ -73,14 +63,9 @@ class AudioRecorder implements Runnable {
                 break;
             }
             totalBytesRead += numBytesRead;
-            //System.out.println("totalBytesRead: " + totalBytesRead);
+            System.out.println("totalBytesRead: " + totalBytesRead);
 
-            //baos.write(data, 0, numBytesRead);
-            try {
-                sender.sendBytes(data);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            baos.write(data, 0, numBytesRead);
 
             // Selectively write the first 100ms to this different buffer
             if (first_100ms_bytes.size() < Utils.CHUNK_OF_100_MS) {

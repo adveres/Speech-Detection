@@ -1,4 +1,4 @@
-package speech_over_ip;
+package speech_detection;
 
 /**
  * This program reads in the sound.raw file and runs certain benchmarks on its

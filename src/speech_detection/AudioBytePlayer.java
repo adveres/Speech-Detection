@@ -1,4 +1,4 @@
-package speech_over_ip;
+package speech_detection;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;

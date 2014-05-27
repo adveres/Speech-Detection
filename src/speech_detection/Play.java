@@ -1,4 +1,4 @@
-package speech_over_ip;
+package speech_detection;
 
 /**
  * Plays an array of raw bytes loaded from a file of given name (arg0).
